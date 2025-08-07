@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% block start %}
+
+<style>
+    body {
+        background-color: #f4f6f9;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        color: #333;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 50px auto;
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+        font-size: 28px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        color: #222;
+    }
+
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .form-control, textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .form-control:focus, textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 22px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 40px;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .table thead {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .table th, .table td {
+        padding: 14px 20px;
+        text-align: center;
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    img {
+        height: 40px;
+        border-radius: 4px;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+        margin: 0 5px;
+        font-weight: 500;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* Search form styles */
+    form {
+        margin-bottom: 20px;
+    }
+
+    form .btn-search {
+        background-color: #28a745;
+        color: #fff;
+        padding: 8px 18px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+
+    form .btn-search:hover {
+        background-color: #218838;
+    }
+
+    .action-links {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+</style>
+
+    <div class="container mt-5  ">
+
+    <h2>add Receipe</h2>
+    <form class="col-6 mx-auto" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Recipe Name</label>
+        <input name="receipe_name" required ="text" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Receipe Description</label>
+        <textarea name="receipe_description" required ="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Receipe Image</label>
+        <input name="receipe_image" type="file" class="form-control">
+    </div>
+
+
+        <button type="submit" class="btn btn-primary">ADD RECEIPE</button>
+    </form>
+
+    <br>
+    <br>
+    <br>
+
+    <div>   
+        <div>
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">SEARCH Recipe </label>
+                    <input name="search" class="form-control">
+                </div>
+                    <button type="submit" class="btn-search"> SEARCH</button>
+            </form>
+        </div>
+    </div>
+
+
+    <br>
+    <br>
+        <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Receipe Name</th>
+        <th scope="col">Receipe Description</th>
+        <th scope="col">image</th>
+        <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for recipe in receipes %}
+        <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{recipe.recipe_name}}</td>
+        <td>{{recipe.recipe_description}}</td>
+        <td>
+            <img src="/media/{{recipe.recipe_image}}" alt="{{ recipe.recipe_image }}" style="height:20px"></td>
+        <td>
+            <a href="/delete-receipe/{{recipe.id}}/">DELETE</a>
+            <a href="/update-receipe/{{recipe.id}}/">UPDATE</a>
+        </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+
+
+
+
+
+    </div>
+
+
+{% endblock %}
+
