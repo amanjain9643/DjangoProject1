@@ -37,11 +37,13 @@ def receipes(request):
 def home(request):
     return HttpResponse("i am good")
 
+@login_required(login_url='/delete-receipe/')
 def delete_receipe(request,id):
     queryset=Recipe.objects.get(id=id)
     queryset.delete()
     return redirect('/receipes/')
 
+@login_required(login_url='/update-receipe/')
 def update_receipe(request,id):
     queryset=Recipe.objects.get(id=id)
     if request.method=='POST':
@@ -101,6 +103,7 @@ def register_page(request):
         return redirect("/login/")
     return render(request,"register.html")
 
+@login_required(login_url='/logout/')
 def logout_page(request):
     logout(request)
     return redirect('/login')
