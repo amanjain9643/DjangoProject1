@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
+     <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background-color: #333;
+      padding: 10px 20px;
+    }
+
+    .login-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+
+    .login-button:hover {
+      background-color: #45a049;
+    }
+  </style>
     <meta charset="UTF-8" />
     <title>title</title>
 </head>
-<body>
+    <body>
+    <div class="navbar">
+    {% if request.user.is_authenticated %}
+    <a href="/logout/" class="login-button">Logout</a>
+    {% else %}
+    <a href="/login/" class="login-button">Login</a>
+    {% endif %}
+    </div>
     {% block start %}
     {% endblock %}
 </body>
